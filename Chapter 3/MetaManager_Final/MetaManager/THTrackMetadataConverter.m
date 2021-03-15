@@ -36,8 +36,13 @@
     if ([item.value isKindOfClass:[NSString class]]) {                      // 1
         NSArray *components =
             [item.stringValue componentsSeparatedByString:@"/"];
-        number = @([components[0] integerValue]);
-        count = @([components[1] integerValue]);
+        if (components.count > 1) {
+            number = @([components[0] integerValue]);
+            count = @([components[1] integerValue]);
+        }
+        else {
+            number = @([components[0] integerValue]);
+        }
     }
     else if ([item.value isKindOfClass:[NSData class]]) {                   // 2
         NSData *data = item.dataValue;
@@ -53,8 +58,12 @@
     }
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];           // 5
-    [dict setObject:number ?: [NSNull null] forKey:THMetadataKeyTrackNumber];
-    [dict setObject:count ?: [NSNull null] forKey:THMetadataKeyTrackCount];
+    if (number) {
+        [dict setObject:number forKey:THMetadataKeyTrackNumber];
+    }
+    if (count) {
+        [dict setObject:count forKey:THMetadataKeyTrackCount];
+    }
 
     return dict;
 }
