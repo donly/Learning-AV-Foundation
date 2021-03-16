@@ -29,6 +29,7 @@
 #import "UIAlertView+THAdditions.h"
 
 #define YOUTUBE_URL @"https://www.youtube.com/watch?v=3tUCuMSPQwE"
+#define ONLINE_VIDEO_URL @"http://demo.nimius.net/video_test/videos/test.mp4"
 
 #define LOCAL_SEGUE        @"localSegue"
 #define STREAMING_SEGUE @"streamingSegue"
@@ -47,12 +48,12 @@
     self.localURL = [[NSBundle mainBundle] URLForResource:@"hubblecast" withExtension:@"m4v"];
 
     // Init streaming asset
-    [HCYoutubeParser h264videosWithYoutubeURL:[NSURL URLWithString:YOUTUBE_URL] completeBlock:^(NSDictionary *urls, NSError *error) {
-        self.streamingURL = [NSURL URLWithString:urls[@"hd720"]];
-    }];
+//    [HCYoutubeParser h264videosWithYoutubeURL:[NSURL URLWithString:YOUTUBE_URL] completeBlock:^(NSDictionary *urls, NSError *error) {
+//        self.streamingURL = [NSURL URLWithString:urls[@"hd720"]];
+//    }];
     
     //self.streamingURL = [NSURL URLWithString:YOUTUBE_URL];
-    
+    self.streamingURL = [NSURL URLWithString:ONLINE_VIDEO_URL];
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
