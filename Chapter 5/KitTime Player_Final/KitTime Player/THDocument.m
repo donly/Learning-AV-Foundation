@@ -27,7 +27,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 #import "THChapter.h"
-#import <QTKit/QTMovieModernizer.h>
+//#import <QTKit/QTMovieModernizer.h>
 #import "NSFileManager+THAdditions.h"
 #import "THWindow.h"
 
@@ -227,37 +227,37 @@
              ofType:(NSString *)typeName
               error:(NSError *__autoreleasing *)outError {
 
-    NSError *error = nil;
-
-    if ([QTMovieModernizer requiresModernization:url error:&error]) {       // 1
-
-        self.modernizing = YES;
-
-        NSURL *destURL = [self tempURLForURL:url];                          // 2
-
-        if (!destURL) {
-            self.modernizing = NO;
-            NSLog(@"Error creating destination URL, skipping modernization.");
-            return NO;
-        }
-
-        QTMovieModernizer *modernizer =                                     // 3
-            [[QTMovieModernizer alloc] initWithSourceURL:url
-                                          destinationURL:destURL];
-
-        modernizer.outputFormat = QTMovieModernizerOutputFormat_H264;       // 4
-
-        [modernizer modernizeWithCompletionHandler:^{
-            if (modernizer.status ==                                        // 5
-                    QTMovieModernizerStatusCompletedWithSuccess) {
-
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self setupPlaybackStackWithURL:destURL];               // 6
-                    [(id)self.windowForSheet hideConvertingView];
-                });
-            }
-        }];
-    }
+//    NSError *error = nil;
+//
+//    if ([QTMovieModernizer requiresModernization:url error:&error]) {       // 1
+//
+//        self.modernizing = YES;
+//
+//        NSURL *destURL = [self tempURLForURL:url];                          // 2
+//
+//        if (!destURL) {
+//            self.modernizing = NO;
+//            NSLog(@"Error creating destination URL, skipping modernization.");
+//            return NO;
+//        }
+//
+//        QTMovieModernizer *modernizer =                                     // 3
+//            [[QTMovieModernizer alloc] initWithSourceURL:url
+//                                          destinationURL:destURL];
+//
+//        modernizer.outputFormat = QTMovieModernizerOutputFormat_H264;       // 4
+//
+//        [modernizer modernizeWithCompletionHandler:^{
+//            if (modernizer.status ==                                        // 5
+//                    QTMovieModernizerStatusCompletedWithSuccess) {
+//
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self setupPlaybackStackWithURL:destURL];               // 6
+//                    [(id)self.windowForSheet hideConvertingView];
+//                });
+//            }
+//        }];
+//    }
 
     return YES;
 }
