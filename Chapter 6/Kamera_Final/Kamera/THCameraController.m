@@ -404,19 +404,24 @@ static const NSString *THCameraAdjustingExposureContext;
 }
 
 - (void)writeImageToAssetsLibrary:(UIImage *)image {
-
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];              // 2
-
-    [library writeImageToSavedPhotosAlbum:image.CGImage                     // 3
-                              orientation:(NSInteger)image.imageOrientation // 4
-                          completionBlock:^(NSURL *assetURL, NSError *error) {
-                              if (!error) {
-                                  [self postThumbnailNotifification:image]; // 5
-                              } else {
-                                  id message = [error localizedDescription];
-                                  NSLog(@"Error: %@", message);
-                              }
-                          }];
+    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+    if (status == ALAuthorizationStatusDenied) {
+        
+    } else {
+        // Perform authorized access to the library
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];              // 2
+        
+        [library writeImageToSavedPhotosAlbum:image.CGImage                     // 3
+                                  orientation:(NSInteger)image.imageOrientation // 4
+                              completionBlock:^(NSURL *assetURL, NSError *error) {
+            if (!error) {
+                [self postThumbnailNotifification:image]; // 5
+            } else {
+                id message = [error localizedDescription];
+                NSLog(@"Error: %@", message);
+            }
+        }];
+    }
 }
 
 - (void)postThumbnailNotifification:(UIImage *)image {
